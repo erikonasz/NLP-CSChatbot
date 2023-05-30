@@ -14619,6 +14619,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Embedding</span>
 <span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
 <span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">LSTM</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">load_model</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
@@ -14653,6 +14654,23 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;faq.xlsx&#39;</span><span class="p">)</span>
+<span class="n">data1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;dialogs.txt&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Questions&#39;</span><span class="p">,</span> <span class="s1">&#39;Answers&#39;</span><span class="p">])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">datas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data1</span><span class="p">,</span> <span class="n">data</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14669,7 +14687,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Exploring data</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">datas</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
      </div>
@@ -14715,28 +14733,28 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   <tbody>
     <tr>
       <th>0</th>
-      <td>When were you founded?</td>
-      <td>We were founded in 2001 Jan 01</td>
+      <td>hi, how are you doing?</td>
+      <td>i'm fine. how about yourself?</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>What is the product return policy?</td>
-      <td>Our product return policy allows customers to ...</td>
+      <td>i'm fine. how about yourself?</td>
+      <td>i'm pretty good. thanks for asking.</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>How can I track my order?</td>
-      <td>To track your order, simply log into your acco...</td>
+      <td>i'm pretty good. thanks for asking.</td>
+      <td>no problem. so how have you been?</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>What payment methods do you accept?</td>
-      <td>We accept major credit cards such as Visa, Mas...</td>
+      <td>no problem. so how have you been?</td>
+      <td>i've been great. what about you?</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Can I cancel my order?</td>
-      <td>Yes, you can cancel your order within 24 hours...</td>
+      <td>i've been great. what about you?</td>
+      <td>i've been good. i'm in school right now.</td>
     </tr>
   </tbody>
 </table>
@@ -14871,6 +14889,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 [nltk_data]   Package stopwords is already up-to-date!
 [nltk_data] Downloading package wordnet to
 [nltk_data]     C:\Users\user\AppData\Roaming\nltk_data...
+[nltk_data]   Package wordnet is already up-to-date!
 </pre>
 </div>
 </div>
@@ -15015,8 +15034,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Splitting data to training/testing.</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_data</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_data</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15078,7 +15096,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15098,206 +15116,46 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Epoch 1/100
-1/1 [==============================] - 0s 131ms/step - loss: 0.0074 - accuracy: 1.0000 - val_loss: 9.4422 - val_accuracy: 0.0000e+00
-Epoch 2/100
-1/1 [==============================] - 0s 71ms/step - loss: 0.0073 - accuracy: 1.0000 - val_loss: 9.4096 - val_accuracy: 0.0000e+00
-Epoch 3/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0072 - accuracy: 1.0000 - val_loss: 9.4174 - val_accuracy: 0.0000e+00
-Epoch 4/100
-1/1 [==============================] - 0s 71ms/step - loss: 0.0070 - accuracy: 1.0000 - val_loss: 9.4533 - val_accuracy: 0.0000e+00
-Epoch 5/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0069 - accuracy: 1.0000 - val_loss: 9.4608 - val_accuracy: 0.0000e+00
-Epoch 6/100
-1/1 [==============================] - 0s 78ms/step - loss: 0.0068 - accuracy: 1.0000 - val_loss: 9.4465 - val_accuracy: 0.0000e+00
-Epoch 7/100
-1/1 [==============================] - 0s 79ms/step - loss: 0.0067 - accuracy: 1.0000 - val_loss: 9.4748 - val_accuracy: 0.0000e+00
-Epoch 8/100
-1/1 [==============================] - 0s 86ms/step - loss: 0.0066 - accuracy: 1.0000 - val_loss: 9.5272 - val_accuracy: 0.0000e+00
-Epoch 9/100
-1/1 [==============================] - 0s 83ms/step - loss: 0.0065 - accuracy: 1.0000 - val_loss: 9.5265 - val_accuracy: 0.0000e+00
-Epoch 10/100
-1/1 [==============================] - 0s 138ms/step - loss: 0.0064 - accuracy: 1.0000 - val_loss: 9.5069 - val_accuracy: 0.0000e+00
-Epoch 11/100
-1/1 [==============================] - 0s 77ms/step - loss: 0.0063 - accuracy: 1.0000 - val_loss: 9.5351 - val_accuracy: 0.0000e+00
-Epoch 12/100
-1/1 [==============================] - 0s 69ms/step - loss: 0.0062 - accuracy: 1.0000 - val_loss: 9.5367 - val_accuracy: 0.0000e+00
-Epoch 13/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0061 - accuracy: 1.0000 - val_loss: 9.4999 - val_accuracy: 0.0000e+00
-Epoch 14/100
-1/1 [==============================] - 0s 82ms/step - loss: 0.0060 - accuracy: 1.0000 - val_loss: 9.5233 - val_accuracy: 0.0000e+00
-Epoch 15/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0059 - accuracy: 1.0000 - val_loss: 9.5475 - val_accuracy: 0.0000e+00
-Epoch 16/100
-1/1 [==============================] - 0s 70ms/step - loss: 0.0058 - accuracy: 1.0000 - val_loss: 9.5267 - val_accuracy: 0.0000e+00
-Epoch 17/100
-1/1 [==============================] - 0s 95ms/step - loss: 0.0058 - accuracy: 1.0000 - val_loss: 9.5543 - val_accuracy: 0.0000e+00
-Epoch 18/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0057 - accuracy: 1.0000 - val_loss: 9.5820 - val_accuracy: 0.0000e+00
-Epoch 19/100
-1/1 [==============================] - 0s 72ms/step - loss: 0.0056 - accuracy: 1.0000 - val_loss: 9.5609 - val_accuracy: 0.0000e+00
-Epoch 20/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0055 - accuracy: 1.0000 - val_loss: 9.5953 - val_accuracy: 0.0000e+00
-Epoch 21/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0055 - accuracy: 1.0000 - val_loss: 9.6090 - val_accuracy: 0.0000e+00
-Epoch 22/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0054 - accuracy: 1.0000 - val_loss: 9.6007 - val_accuracy: 0.0000e+00
-Epoch 23/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0053 - accuracy: 1.0000 - val_loss: 9.6443 - val_accuracy: 0.0000e+00
-Epoch 24/100
-1/1 [==============================] - 0s 72ms/step - loss: 0.0053 - accuracy: 1.0000 - val_loss: 9.6283 - val_accuracy: 0.0000e+00
-Epoch 25/100
-1/1 [==============================] - 0s 77ms/step - loss: 0.0052 - accuracy: 1.0000 - val_loss: 9.6366 - val_accuracy: 0.0000e+00
-Epoch 26/100
-1/1 [==============================] - 0s 76ms/step - loss: 0.0051 - accuracy: 1.0000 - val_loss: 9.6550 - val_accuracy: 0.0000e+00
-Epoch 27/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0051 - accuracy: 1.0000 - val_loss: 9.6298 - val_accuracy: 0.0000e+00
-Epoch 28/100
-1/1 [==============================] - 0s 85ms/step - loss: 0.0050 - accuracy: 1.0000 - val_loss: 9.6629 - val_accuracy: 0.0000e+00
-Epoch 29/100
-1/1 [==============================] - 0s 77ms/step - loss: 0.0049 - accuracy: 1.0000 - val_loss: 9.6584 - val_accuracy: 0.0000e+00
-Epoch 30/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0049 - accuracy: 1.0000 - val_loss: 9.6690 - val_accuracy: 0.0000e+00
-Epoch 31/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0048 - accuracy: 1.0000 - val_loss: 9.6965 - val_accuracy: 0.0000e+00
-Epoch 32/100
-1/1 [==============================] - 0s 70ms/step - loss: 0.0048 - accuracy: 1.0000 - val_loss: 9.6770 - val_accuracy: 0.0000e+00
-Epoch 33/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0047 - accuracy: 1.0000 - val_loss: 9.7163 - val_accuracy: 0.0000e+00
-Epoch 34/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0047 - accuracy: 1.0000 - val_loss: 9.6821 - val_accuracy: 0.0000e+00
-Epoch 35/100
-1/1 [==============================] - 0s 72ms/step - loss: 0.0046 - accuracy: 1.0000 - val_loss: 9.7341 - val_accuracy: 0.0000e+00
-Epoch 36/100
-1/1 [==============================] - 0s 88ms/step - loss: 0.0046 - accuracy: 1.0000 - val_loss: 9.6810 - val_accuracy: 0.0000e+00
-Epoch 37/100
-1/1 [==============================] - 0s 82ms/step - loss: 0.0045 - accuracy: 1.0000 - val_loss: 9.7746 - val_accuracy: 0.0000e+00
-Epoch 38/100
-1/1 [==============================] - 0s 81ms/step - loss: 0.0045 - accuracy: 1.0000 - val_loss: 9.6480 - val_accuracy: 0.0000e+00
-Epoch 39/100
-1/1 [==============================] - 0s 71ms/step - loss: 0.0045 - accuracy: 1.0000 - val_loss: 9.8813 - val_accuracy: 0.0000e+00
-Epoch 40/100
-1/1 [==============================] - 0s 81ms/step - loss: 0.0045 - accuracy: 1.0000 - val_loss: 9.4910 - val_accuracy: 0.0000e+00
-Epoch 41/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0048 - accuracy: 1.0000 - val_loss: 10.1307 - val_accuracy: 0.0000e+00
-Epoch 42/100
-1/1 [==============================] - 0s 71ms/step - loss: 0.0056 - accuracy: 1.0000 - val_loss: 9.2147 - val_accuracy: 0.0000e+00
-Epoch 43/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0073 - accuracy: 1.0000 - val_loss: 9.7706 - val_accuracy: 0.0000e+00
-Epoch 44/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0047 - accuracy: 1.0000 - val_loss: 9.7614 - val_accuracy: 0.0000e+00
-Epoch 45/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0051 - accuracy: 1.0000 - val_loss: 9.7095 - val_accuracy: 0.0000e+00
-Epoch 46/100
-1/1 [==============================] - 0s 72ms/step - loss: 0.0058 - accuracy: 1.0000 - val_loss: 9.9362 - val_accuracy: 0.0000e+00
-Epoch 47/100
-1/1 [==============================] - 0s 121ms/step - loss: 0.0063 - accuracy: 1.0000 - val_loss: 9.7849 - val_accuracy: 0.0000e+00
-Epoch 48/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0086 - accuracy: 1.0000 - val_loss: 10.1840 - val_accuracy: 0.0000e+00
-Epoch 49/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0068 - accuracy: 1.0000 - val_loss: 9.8258 - val_accuracy: 0.0000e+00
-Epoch 50/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0049 - accuracy: 1.0000 - val_loss: 9.5396 - val_accuracy: 0.0000e+00
-Epoch 51/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0054 - accuracy: 1.0000 - val_loss: 9.4494 - val_accuracy: 0.0000e+00
-Epoch 52/100
-1/1 [==============================] - 0s 71ms/step - loss: 0.0054 - accuracy: 1.0000 - val_loss: 9.4383 - val_accuracy: 0.0000e+00
-Epoch 53/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0050 - accuracy: 1.0000 - val_loss: 9.5369 - val_accuracy: 0.0000e+00
-Epoch 54/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0052 - accuracy: 1.0000 - val_loss: 9.5871 - val_accuracy: 0.0000e+00
-Epoch 55/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0052 - accuracy: 1.0000 - val_loss: 9.4727 - val_accuracy: 0.0000e+00
-Epoch 56/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0048 - accuracy: 1.0000 - val_loss: 9.3607 - val_accuracy: 0.0000e+00
-Epoch 57/100
-1/1 [==============================] - 0s 71ms/step - loss: 0.0046 - accuracy: 1.0000 - val_loss: 9.3118 - val_accuracy: 0.0000e+00
-Epoch 58/100
-1/1 [==============================] - 0s 76ms/step - loss: 0.0046 - accuracy: 1.0000 - val_loss: 9.3151 - val_accuracy: 0.0000e+00
-Epoch 59/100
-1/1 [==============================] - 0s 72ms/step - loss: 0.0045 - accuracy: 1.0000 - val_loss: 9.3627 - val_accuracy: 0.0000e+00
-Epoch 60/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0044 - accuracy: 1.0000 - val_loss: 9.4471 - val_accuracy: 0.0000e+00
-Epoch 61/100
-1/1 [==============================] - 0s 72ms/step - loss: 0.0043 - accuracy: 1.0000 - val_loss: 9.5362 - val_accuracy: 0.0000e+00
-Epoch 62/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0043 - accuracy: 1.0000 - val_loss: 9.5811 - val_accuracy: 0.0000e+00
-Epoch 63/100
-1/1 [==============================] - 0s 71ms/step - loss: 0.0042 - accuracy: 1.0000 - val_loss: 9.5681 - val_accuracy: 0.0000e+00
-Epoch 64/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0041 - accuracy: 1.0000 - val_loss: 9.5263 - val_accuracy: 0.0000e+00
-Epoch 65/100
-1/1 [==============================] - 0s 77ms/step - loss: 0.0040 - accuracy: 1.0000 - val_loss: 9.4890 - val_accuracy: 0.0000e+00
-Epoch 66/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0039 - accuracy: 1.0000 - val_loss: 9.4747 - val_accuracy: 0.0000e+00
-Epoch 67/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0038 - accuracy: 1.0000 - val_loss: 9.4850 - val_accuracy: 0.0000e+00
-Epoch 68/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0038 - accuracy: 1.0000 - val_loss: 9.5146 - val_accuracy: 0.0000e+00
-Epoch 69/100
-1/1 [==============================] - 0s 76ms/step - loss: 0.0037 - accuracy: 1.0000 - val_loss: 9.5616 - val_accuracy: 0.0000e+00
-Epoch 70/100
-1/1 [==============================] - 0s 79ms/step - loss: 0.0036 - accuracy: 1.0000 - val_loss: 9.6240 - val_accuracy: 0.0000e+00
-Epoch 71/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0036 - accuracy: 1.0000 - val_loss: 9.6928 - val_accuracy: 0.0000e+00
-Epoch 72/100
-1/1 [==============================] - 0s 72ms/step - loss: 0.0035 - accuracy: 1.0000 - val_loss: 9.7473 - val_accuracy: 0.0000e+00
-Epoch 73/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0035 - accuracy: 1.0000 - val_loss: 9.7648 - val_accuracy: 0.0000e+00
-Epoch 74/100
-1/1 [==============================] - 0s 77ms/step - loss: 0.0035 - accuracy: 1.0000 - val_loss: 9.7551 - val_accuracy: 0.0000e+00
-Epoch 75/100
-1/1 [==============================] - 0s 71ms/step - loss: 0.0034 - accuracy: 1.0000 - val_loss: 9.7520 - val_accuracy: 0.0000e+00
-Epoch 76/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0034 - accuracy: 1.0000 - val_loss: 9.7725 - val_accuracy: 0.0000e+00
-Epoch 77/100
-1/1 [==============================] - 0s 79ms/step - loss: 0.0034 - accuracy: 1.0000 - val_loss: 9.8086 - val_accuracy: 0.0000e+00
-Epoch 78/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0033 - accuracy: 1.0000 - val_loss: 9.8345 - val_accuracy: 0.0000e+00
-Epoch 79/100
-1/1 [==============================] - 0s 72ms/step - loss: 0.0033 - accuracy: 1.0000 - val_loss: 9.8407 - val_accuracy: 0.0000e+00
-Epoch 80/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0032 - accuracy: 1.0000 - val_loss: 9.8489 - val_accuracy: 0.0000e+00
-Epoch 81/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0032 - accuracy: 1.0000 - val_loss: 9.8689 - val_accuracy: 0.0000e+00
-Epoch 82/100
-1/1 [==============================] - 0s 79ms/step - loss: 0.0031 - accuracy: 1.0000 - val_loss: 9.8830 - val_accuracy: 0.0000e+00
-Epoch 83/100
-1/1 [==============================] - 0s 80ms/step - loss: 0.0031 - accuracy: 1.0000 - val_loss: 9.8696 - val_accuracy: 0.0000e+00
-Epoch 84/100
-1/1 [==============================] - 0s 75ms/step - loss: 0.0031 - accuracy: 1.0000 - val_loss: 9.8400 - val_accuracy: 0.0000e+00
-Epoch 85/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0030 - accuracy: 1.0000 - val_loss: 9.8194 - val_accuracy: 0.0000e+00
-Epoch 86/100
-1/1 [==============================] - 0s 115ms/step - loss: 0.0030 - accuracy: 1.0000 - val_loss: 9.8191 - val_accuracy: 0.0000e+00
-Epoch 87/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0030 - accuracy: 1.0000 - val_loss: 9.8365 - val_accuracy: 0.0000e+00
-Epoch 88/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0029 - accuracy: 1.0000 - val_loss: 9.8595 - val_accuracy: 0.0000e+00
-Epoch 89/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0029 - accuracy: 1.0000 - val_loss: 9.8723 - val_accuracy: 0.0000e+00
-Epoch 90/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0029 - accuracy: 1.0000 - val_loss: 9.8689 - val_accuracy: 0.0000e+00
-Epoch 91/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0029 - accuracy: 1.0000 - val_loss: 9.8567 - val_accuracy: 0.0000e+00
-Epoch 92/100
-1/1 [==============================] - 0s 73ms/step - loss: 0.0028 - accuracy: 1.0000 - val_loss: 9.8462 - val_accuracy: 0.0000e+00
-Epoch 93/100
-1/1 [==============================] - 0s 76ms/step - loss: 0.0028 - accuracy: 1.0000 - val_loss: 9.8437 - val_accuracy: 0.0000e+00
-Epoch 94/100
-1/1 [==============================] - 0s 72ms/step - loss: 0.0028 - accuracy: 1.0000 - val_loss: 9.8489 - val_accuracy: 0.0000e+00
-Epoch 95/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0028 - accuracy: 1.0000 - val_loss: 9.8577 - val_accuracy: 0.0000e+00
-Epoch 96/100
-1/1 [==============================] - 0s 70ms/step - loss: 0.0027 - accuracy: 1.0000 - val_loss: 9.8665 - val_accuracy: 0.0000e+00
-Epoch 97/100
-1/1 [==============================] - 0s 77ms/step - loss: 0.0027 - accuracy: 1.0000 - val_loss: 9.8743 - val_accuracy: 0.0000e+00
-Epoch 98/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0027 - accuracy: 1.0000 - val_loss: 9.8808 - val_accuracy: 0.0000e+00
-Epoch 99/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0027 - accuracy: 1.0000 - val_loss: 9.8856 - val_accuracy: 0.0000e+00
-Epoch 100/100
-1/1 [==============================] - 0s 74ms/step - loss: 0.0026 - accuracy: 1.0000 - val_loss: 9.8884 - val_accuracy: 0.0000e+00
+<pre>Epoch 1/20
+1/1 [==============================] - 3s 3s/step - loss: 2.3952 - accuracy: 0.1250 - val_loss: 2.4208 - val_accuracy: 0.0000e+00
+Epoch 2/20
+1/1 [==============================] - 0s 83ms/step - loss: 2.3783 - accuracy: 0.3750 - val_loss: 2.4438 - val_accuracy: 0.0000e+00
+Epoch 3/20
+1/1 [==============================] - 0s 75ms/step - loss: 2.3606 - accuracy: 0.3750 - val_loss: 2.4735 - val_accuracy: 0.0000e+00
+Epoch 4/20
+1/1 [==============================] - 0s 72ms/step - loss: 2.3410 - accuracy: 0.3750 - val_loss: 2.5158 - val_accuracy: 0.0000e+00
+Epoch 5/20
+1/1 [==============================] - 0s 80ms/step - loss: 2.3176 - accuracy: 0.3750 - val_loss: 2.5829 - val_accuracy: 0.0000e+00
+Epoch 6/20
+1/1 [==============================] - 0s 79ms/step - loss: 2.2878 - accuracy: 0.2500 - val_loss: 2.7064 - val_accuracy: 0.0000e+00
+Epoch 7/20
+1/1 [==============================] - 0s 76ms/step - loss: 2.2455 - accuracy: 0.2500 - val_loss: 2.9830 - val_accuracy: 0.0000e+00
+Epoch 8/20
+1/1 [==============================] - 0s 72ms/step - loss: 2.1813 - accuracy: 0.1250 - val_loss: 3.6152 - val_accuracy: 0.0000e+00
+Epoch 9/20
+1/1 [==============================] - 0s 81ms/step - loss: 2.1141 - accuracy: 0.1250 - val_loss: 4.3209 - val_accuracy: 0.0000e+00
+Epoch 10/20
+1/1 [==============================] - 0s 80ms/step - loss: 2.0831 - accuracy: 0.1250 - val_loss: 4.6762 - val_accuracy: 0.0000e+00
+Epoch 11/20
+1/1 [==============================] - 0s 74ms/step - loss: 2.0423 - accuracy: 0.1250 - val_loss: 4.9128 - val_accuracy: 0.0000e+00
+Epoch 12/20
+1/1 [==============================] - 0s 82ms/step - loss: 2.0145 - accuracy: 0.3750 - val_loss: 5.1044 - val_accuracy: 0.0000e+00
+Epoch 13/20
+1/1 [==============================] - 0s 77ms/step - loss: 2.0033 - accuracy: 0.2500 - val_loss: 5.2725 - val_accuracy: 0.0000e+00
+Epoch 14/20
+1/1 [==============================] - 0s 73ms/step - loss: 1.9932 - accuracy: 0.3750 - val_loss: 5.4292 - val_accuracy: 0.0000e+00
+Epoch 15/20
+1/1 [==============================] - 0s 77ms/step - loss: 1.9798 - accuracy: 0.2500 - val_loss: 5.5652 - val_accuracy: 0.0000e+00
+Epoch 16/20
+1/1 [==============================] - 0s 74ms/step - loss: 1.9591 - accuracy: 0.3750 - val_loss: 5.6662 - val_accuracy: 0.0000e+00
+Epoch 17/20
+1/1 [==============================] - 0s 80ms/step - loss: 1.9294 - accuracy: 0.5000 - val_loss: 5.7273 - val_accuracy: 0.0000e+00
+Epoch 18/20
+1/1 [==============================] - 0s 79ms/step - loss: 1.8989 - accuracy: 0.5000 - val_loss: 5.7462 - val_accuracy: 0.0000e+00
+Epoch 19/20
+1/1 [==============================] - 0s 75ms/step - loss: 1.8685 - accuracy: 0.6250 - val_loss: 5.7293 - val_accuracy: 0.0000e+00
+Epoch 20/20
+1/1 [==============================] - 0s 74ms/step - loss: 1.8348 - accuracy: 0.8750 - val_loss: 5.6762 - val_accuracy: 0.0000e+00
 </pre>
 </div>
 </div>
@@ -15306,7 +15164,7 @@ Epoch 100/100
 
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -15314,10 +15172,7 @@ Epoch 100/100
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">])</span>  <span class="c1"># Training loss values</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>  <span class="c1"># Training accuracy values</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">])</span>  <span class="c1"># Validation loss values</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">])</span>  <span class="c1"># Validation accuracy values</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;chatbot.h5&quot;</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15325,28 +15180,21 @@ Epoch 100/100
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#load model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;chatbot.h5&quot;</span><span class="p">)</span>
+</pre></div>
 
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[0.007414047606289387, 0.007280487101525068, 0.007156491279602051, 0.007020425051450729, 0.006900805048644543, 0.006789908744394779, 0.006686454638838768, 0.006579231470823288, 0.006484752520918846, 0.006382003892213106, 0.00628547603264451, 0.006180707830935717, 0.006092165596783161, 0.006007806397974491, 0.005919310729950666, 0.005841057747602463, 0.0057605719193816185, 0.005679268389940262, 0.005606076680123806, 0.005533144809305668, 0.005459383130073547, 0.005388214718550444, 0.005319362506270409, 0.005251954309642315, 0.005185594316571951, 0.0051218001171946526, 0.005061268340796232, 0.00500101875513792, 0.004940340761095285, 0.004880509339272976, 0.004823957569897175, 0.004769450984895229, 0.004715500399470329, 0.0046623265370726585, 0.004610610194504261, 0.004561238456517458, 0.004515296779572964, 0.0044766636565327644, 0.0044591790065169334, 0.004505233373492956, 0.00478402990847826, 0.005579296499490738, 0.007299620658159256, 0.004736977629363537, 0.005121239926666021, 0.00583072192966938, 0.006264973431825638, 0.008556729182600975, 0.006764314137399197, 0.004867319017648697, 0.00542209018021822, 0.005401669070124626, 0.004995525814592838, 0.005202782340347767, 0.005164517089724541, 0.004778703674674034, 0.004574091173708439, 0.004568610340356827, 0.004540878813713789, 0.004417075775563717, 0.004312487784773111, 0.004283509217202663, 0.004237805493175983, 0.0041115861386060715, 0.00396339874714613, 0.0038664627354592085, 0.003822017228230834, 0.0037771170027554035, 0.003705003298819065, 0.0036314402241259813, 0.003582831472158432, 0.0035494891926646233, 0.0035085007548332214, 0.003453537356108427, 0.0034062203485518694, 0.0033777253702282906, 0.003350481390953064, 0.003316690679639578, 0.0032730356324464083, 0.0032260585576295853, 0.0031877397559583187, 0.003149110358208418, 0.003111753147095442, 0.0030748178251087666, 0.003041154472157359, 0.003010849468410015, 0.0029771362897008657, 0.002940800040960312, 0.002908608876168728, 0.00288222124800086, 0.002857326064258814, 0.0028309253975749016, 0.0028042851481586695, 0.00277953059412539, 0.002754781860858202, 0.002728925785049796, 0.0027051782235503197, 0.0026843079831451178, 0.0026623958256095648, 0.0026389819104224443]
-[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-[9.442242622375488, 9.40956974029541, 9.417354583740234, 9.453319549560547, 9.460835456848145, 9.44649600982666, 9.474815368652344, 9.52723503112793, 9.526543617248535, 9.50687313079834, 9.535110473632812, 9.536731719970703, 9.499861717224121, 9.523313522338867, 9.547492027282715, 9.526728630065918, 9.554299354553223, 9.581968307495117, 9.560935020446777, 9.595293045043945, 9.609025955200195, 9.600688934326172, 9.64426326751709, 9.628334045410156, 9.636557579040527, 9.655010223388672, 9.629753112792969, 9.662864685058594, 9.65841007232666, 9.669029235839844, 9.696479797363281, 9.676965713500977, 9.716287612915039, 9.682137489318848, 9.734103202819824, 9.680956840515137, 9.774588584899902, 9.64797592163086, 9.881336212158203, 9.491040229797363, 10.130741119384766, 9.214741706848145, 9.770587921142578, 9.761427879333496, 9.709534645080566, 9.936238288879395, 9.784904479980469, 10.184037208557129, 9.825809478759766, 9.539589881896973, 9.449411392211914, 9.438343048095703, 9.53687572479248, 9.587077140808105, 9.472670555114746, 9.360737800598145, 9.31179141998291, 9.315055847167969, 9.362740516662598, 9.447132110595703, 9.536231994628906, 9.581050872802734, 9.568077087402344, 9.526281356811523, 9.488972663879395, 9.474732398986816, 9.484950065612793, 9.514632225036621, 9.56160831451416, 9.624011039733887, 9.6928129196167, 9.747260093688965, 9.764751434326172, 9.755101203918457, 9.752036094665527, 9.772478103637695, 9.808558464050293, 9.834484100341797, 9.840744972229004, 9.848868370056152, 9.868870735168457, 9.883018493652344, 9.869624137878418, 9.839954376220703, 9.819369316101074, 9.819083213806152, 9.83653736114502, 9.85946273803711, 9.872257232666016, 9.868925094604492, 9.856654167175293, 9.846195220947266, 9.843718528747559, 9.848906517028809, 9.857662200927734, 9.866515159606934, 9.874309539794922, 9.880829811096191, 9.885598182678223, 9.888407707214355]
-[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-</pre>
+     </div>
 </div>
 </div>
-
-</div>
-
 </div>
 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -15357,11 +15205,12 @@ Epoch 100/100
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Discount?&quot;</span><span class="p">]</span>
-
-<span class="n">new_sequences</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
+<span class="n">new_sequences</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">texts_to_sequences</span><span class="p">([</span><span class="n">question</span><span class="p">])</span>
 <span class="n">new_input_sequences</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">new_sequences</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">max_len</span><span class="p">)</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_input_sequences</span><span class="p">)</span>
+<span class="n">predicted_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">predicted_answers</span> <span class="o">=</span> <span class="p">[</span><span class="n">answers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">predicted_indices</span><span class="p">]</span>
 </pre></div>
 
      </div>
@@ -15381,8 +15230,8 @@ Epoch 100/100
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>1/1 [==============================] - 0s 35ms/step
-1/1 [==============================] - 0s 35ms/step
+<pre>1/1 [==============================] - 0s 352ms/step
+1/1 [==============================] - 0s 352ms/step
 </pre>
 </div>
 </div>
@@ -15399,13 +15248,8 @@ Epoch 100/100
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">predicted_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span> <span class="k">for</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">]</span>
-<span class="n">predicted_answers</span> <span class="o">=</span> <span class="p">[</span><span class="n">answers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">predicted_indices</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">question</span><span class="p">,</span> <span class="n">answer</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">question</span><span class="p">,</span> <span class="n">predicted_answers</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Question: </span><span class="si">{</span><span class="n">question</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted Answer: </span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Question: </span><span class="si">{</span><span class="n">question</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted Answer: </span><span class="si">{</span><span class="n">predicted_answers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15425,9 +15269,8 @@ Epoch 100/100
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Question: Discount?
-Predicted Answer: Yes, we offer international shipping to most countries. Shipping fees and delivery times may vary depending on the destination.
-
+<pre>Question: Hello
+Predicted Answer: Yes, you can cancel your order within 24 hours of placing it. Please contact our customer support team with your order details for assistance.
 </pre>
 </div>
 </div>
