@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #conversation {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        .user {
+            color: #0066cc;
+            background-color: #e6f3ff;
+        }
+
+        .bot {
+            color: #cc0000;
+            background-color: #ffe6e6;
+        }
+
+        #user_input {
+            width: 80%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #send_btn {
+            padding: 8px 12px;
+            border: none;
+            background-color: #0066cc;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #send_btn:hover {
+            background-color: #004080;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('#user_input').keydown(function(e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    sendUserInput();
+                }
+            });
+
+            $('#send_btn').click(function() {
+                sendUserInput();
+            });
+
+            function sendUserInput() {
+                var userInput = $('#user_input').val().trim();
+                if (userInput !== '') {
+                    $('#user_input').val('');
+                    $('#conversation').append('<div class="message user">You: ' + userInput + '</div>');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/get_response',
+                        data: {user_input: userInput},
+                        success: function(response) {
+                            $('#conversation').append('<div class="message bot">Bot: ' + response + '</div>');
+                            $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Chatbot</h1>
+    <div id="conversation"></div>
+    <div>
+        <input type="text" id="user_input" autofocus>
+        <button id="send_btn">Send</button>
+    </div>
+</body>
+</html>
