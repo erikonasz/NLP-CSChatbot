@@ -15,7 +15,7 @@ This project implements a chatbot using the Flask framework and the OpenAI GPT-3
 - Integration with OpenAI GPT-3 for generating responses
 - Customizable responses based on predefined greetings and customer support best practices
 - Keyword matching for handling specific topics or sections from terms and conditions
-- Website to test things
+
 
 ## Configuration
 
